@@ -1,0 +1,11 @@
+!!! 5
+%html
+  %head
+    %title Rotten Potatoes!
+    = stylesheet_link_tag 'application'
+    = javascript_include_tag 'applitaciton'
+    = csrf_meta_tags
+    = csp_meta_tag
+    %body
+      #main
+        = yeild
