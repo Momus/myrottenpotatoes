@@ -90,3 +90,6 @@ form label {
     border-color: red;
     color: red;
 }
+.hilite{
+    background-color: yellow !important;
+}
