@@ -8,8 +8,8 @@
     = csp_meta_tag
   %body
     - if flash[:notice]
-      #notice.message= flash[:notice]
+      #notice.message= flash[:notice].html_safe
     - elsif flash[:warning]
-      #warning.message= flash[:warning]
+      #warning.message= flash[:warning].html_safe
     #main
       = yield

@@ -65,14 +65,28 @@ table#movies th, table#movies td {
   padding: 4px;
   text-align: left;
 }
-#notice, #warning {
-  background: rosybrown;
-  margin: 1em 0;
-  padding: 4px;
-}
 form label {
   display: block;
   line-height: 25px;
   font-weight: bold;
   color: maroon;
+}
+/* flash message */
+.message{
+    width: 50%;
+    margin: auto;
+    margin-top: 1em;
+    text-align: center;
+    font-weight: bold;
+    background: whitesmoke;
+    border: 4px ridge;
+    padding: 1em;
+}
+#notice {
+    border-color: green;
+    color: green;
+}
+#warning{
+    border-color: red;
+    color: red;
 }
