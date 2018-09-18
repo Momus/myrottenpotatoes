@@ -4,22 +4,22 @@ class MoviesController < ApplicationController
     @all_ratings = Movie
                    .distinct(:rating)
                    .pluck(:rating)
-    @ratings = if params[:ratings].nil?
-                 @all_ratings
-               else
-                 params[:ratings].keys
-               end
-    @movies = case params[:sort]
+    session[:ratings] = if params[:ratings].nil? && session[:ratings].nil?
+                          @all_ratings
+                        elsif !params[:ratings].nil?
+                          params[:ratings].keys
+                        else
+                          session[:ratings]
+                        end
+
+    session[:sort] = params[:sort] unless params[:sort].nil?
+    @movies = case session[:sort]
               when 'title'
-                @sort = :title
-                Movie.where(rating: @ratings).order(:title)
+                Movie.where(rating: session[:ratings]).order(:title)
               when 'release_date'
-                @sort = :release_date
-                Movie
-              .where(rating: @ratings)
-              .order(:release_date)
+                Movie.where(rating: session[:ratings]).order(:release_date)
               else
-                Movie.where(rating: @ratings)
+                Movie.where(rating: session[:ratings])
               end
   end
 
