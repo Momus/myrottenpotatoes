@@ -1,15 +1,25 @@
 # The movies controller.
 class MoviesController < ApplicationController
   def index
+    @all_ratings = Movie
+                   .distinct(:rating)
+                   .pluck(:rating)
+    @ratings = if params[:ratings].nil?
+                 @all_ratings
+               else
+                 params[:ratings].keys
+               end
     @movies = case params[:sort]
               when 'title'
                 @sort = :title
-                Movie.all.order(:title)
+                Movie.where(rating: @ratings).order(:title)
               when 'release_date'
                 @sort = :release_date
-                Movie.all.order(:release_date)
+                Movie
+              .where(rating: @ratings)
+              .order(:release_date)
               else
-                Movie.all
+                Movie.where(rating: @ratings)
               end
   end
 
