@@ -1,16 +1,9 @@
-%h2
+%h1
   Editing 
-  %em  #{@movie.title}.
+  %em  #{@movie.title}
+%br
 
   = form_tag movie_path(@movie), method: :put do
 
-    = label :movie, :title, 'Title'
-    = text_field :movie, 'title'
-
-    = label :movie, :rating, 'Rating'
-    = select :movie, :rating, ['G', 'PG', 'PG-13', 'R', 'NC-17']
-
-    = label :movie, :release_date, 'Release Date'
-    = date_select :movie, :release_date, start_year: 1895
-
+    = render partial: 'movie_form'
     = submit_tag 'Save Changes'

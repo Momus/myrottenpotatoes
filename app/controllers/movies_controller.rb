@@ -1,9 +1,9 @@
 # The movies controller.
 class MoviesController < ApplicationController
+
   def index
-    @all_ratings = Movie
-                   .distinct(:rating)
-                   .pluck(:rating)
+    @all_ratings = Movie.all_ratings
+
     session[:ratings] = if params[:ratings].nil? && session[:ratings].nil?
                           @all_ratings
                         elsif !params[:ratings].nil?
@@ -13,14 +13,8 @@ class MoviesController < ApplicationController
                         end
 
     session[:sort] = params[:sort] unless params[:sort].nil?
-    @movies = case session[:sort]
-              when 'title'
-                Movie.where(rating: session[:ratings]).order(:title)
-              when 'release_date'
-                Movie.where(rating: session[:ratings]).order(:release_date)
-              else
-                Movie.where(rating: session[:ratings])
-              end
+
+    @movies = Movie.ordered_ratings(session[:ratings], session[:sort])
   end
 
   def show

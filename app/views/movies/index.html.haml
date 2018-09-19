@@ -24,14 +24,6 @@
       id: 'release_date_header'
       %th Action
     %tbody
-      - @movies.each do |movie|
-        %tr
-          %td
-            %em= movie.title
-          %td= movie.rating
-          %td= movie.release_date
-          %td
-            = button_to "Info", movie_path(movie), method: :get
-            = button_to "Edit", edit_movie_path(movie.id), method: :get
-            = button_to "Delete", movie_path(movie.id), method: :delete
+    = render partial: 'movie', collection: @movies
+    
 = button_to 'Add new movie', new_movie_path, method: :get
