@@ -1,6 +1,13 @@
 # The movies controller.
 class MoviesController < ApplicationController
 
+  def permitted
+    params.require(:movie).permit(:movie,
+                                  :title,
+                                  :rating,
+                                  :release_date)
+  end
+
   def index
     @all_ratings = Movie.all_ratings
 
@@ -22,13 +29,13 @@ class MoviesController < ApplicationController
   end
 
   def create
-    permitted = params.require(:movie).permit(:movie,
-                                              :title,
-                                              :rating,
-                                              :release_date)
-    @movie = Movie.create!(permitted)
-    flash[:notice] = "<em>#{@movie.title}</em> was successfully created."
-    redirect_to movies_path
+    @movie = Movie.new(permitted)
+    if @movie.save
+      flash[:notice] = "<em>#{@movie.title}</em> was successfully created."
+      redirect_to movies_path
+    else
+      render 'new'
+    end
   end
 
   def new
@@ -41,9 +48,12 @@ class MoviesController < ApplicationController
 
   def update
     @movie = Movie.find params[:id]
-    @movie.update_attributes!(params[:movie].permit!)
-    flash[:notice] = "<em>#{@movie.title}</em> was successfully updated."
-    redirect_to movie_path(@movie)
+    if @movie.update_attributes(permitted)
+      flash[:notice] = "<em>#{@movie.title}</em> was successfully updated."
+      redirect_to movie_path(@movie)
+    else
+      render 'edit' # note, 'edit' template can access @movie's field values!
+    end
   end
 
   def destroy

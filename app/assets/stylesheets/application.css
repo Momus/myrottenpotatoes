@@ -91,5 +91,11 @@ form label {
     color: red;
 }
 .hilite{
-    background-color: yellow !important;
+    background-color: yellow;
+}
+
+div.field_with_errors input {
+    border: 2px solid red;
+    background-color: yellow;
+    font-weight: bold;
 }
