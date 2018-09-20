@@ -1,7 +1,7 @@
 # To make the sessions.
 class SessionsController < ApplicationController
   # user shouln't have to be logged in before logging in!
-  skip_before_action :set_current_user
+  skip_before_action :set_current_user, raise: false
 
   def create
     auth = request.env['omniauth.auth']

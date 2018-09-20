@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   root to: redirect('movies')
 
   get 'auth/:provider/callback', to: 'sessions#create'
-  post 'logout' => 'sessions#destroy'
-  get 'auth/faliure' => 'sessions#faliure'
+  post 'logout', to: 'sessions#destroy'
+  get 'auth/faliure', to: 'sessions#faliure'
   get 'auth/twitter', as: 'login'
 end
