@@ -1,5 +1,8 @@
 # The authenticated users.
 class Moviegoer < ApplicationRecord
+  has_many :reviews
+  has_many :movies, through: :reviews
+
   def self.create_with_omniauth(auth)
     Moviegoer.create!(
       provider: auth['provider'],

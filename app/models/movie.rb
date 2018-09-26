@@ -1,12 +1,9 @@
 # the movies db
 class Movie < ActiveRecord::Base
+  has_many :reviews
+  has_many :moviegoers, through: :reviews
 
   @@grandfathered_date = Time.zone.parse('1 November 1968')
-
-  # scope :all_ratings, -> { distinct(:rating).pluck(:rating) }
-  def self.all_ratings
-    %w[G PG PG-13 R NC-17]
-  end
 
   validates :title, presence: true
   validates :release_date, presence: true
@@ -14,6 +11,19 @@ class Movie < ActiveRecord::Base
   validates :rating,
             inclusion: { in: Movie.all_ratings },
             unless: :grandfathered?
+
+  scope :with_good_reviews, lambda { |threshold|
+    Movie.joins(:reviews).group(:movie_id)
+         .having(['AVG(reviews.potatoes > ?', threshold.to_i])
+  }
+  scope :for_kids, lambda {
+    Movie.where('rating in (?)', %w[G PG PG-13])
+  }
+
+  # scope :all_ratings, -> { distinct(:rating).pluck(:rating) }
+  def self.all_ratings
+    %w[G PG PG-13 R NC-17]
+  end
 
   def released_1895_or_later
     errors.add(:release_date, 'must be March 19, 1895 or later') if

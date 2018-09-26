@@ -5,19 +5,25 @@ class MoviesController < ApplicationController
     params.require(:movie).permit(:movie,
                                   :title,
                                   :rating,
-                                  :release_date)
+                                  :release_date,
+                                  :threshold,
+                                  :for_kids,
+                                  :with_many_fans,
+                                  :recently_reviewed)
+  end
+
+  def movies_with_filters
+    @movies = Movie.with_good_reviews(params[:threshold])
+    %w[for_kids with_many_fans recently_reviewed].each do |filter|
+      @movies = @movies.send(filter) if params[filter]
+    end
   end
 
   def index
     @all_ratings = Movie.all_ratings
 
-    session[:ratings] = if params[:ratings].nil? && session[:ratings].nil?
-                          @all_ratings
-                        elsif !params[:ratings].nil?
-                          params[:ratings].keys
-                        else
-                          session[:ratings]
-                        end
+    session[:ratings] = params[:ratings].keys if params[:ratings]
+    session[:ratings] = @all_ratings if session[:ratings].nil?
 
     session[:sort] = params[:sort] unless params[:sort].nil?
 
