@@ -23,6 +23,8 @@ gem 'haml'
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
+## OMG! jQuery no longer installed by default!
+gem 'jquery-rails'
 # Authenticate!
 gem 'omniauth-twitter'
 # Use Redis adapter to run Action Cable in production

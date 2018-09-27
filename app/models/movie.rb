@@ -9,7 +9,10 @@ class Movie < ActiveRecord::Base
   validates :release_date, presence: true
   validate :released_1895_or_later
   validates :rating,
-            inclusion: { in: Movie.all_ratings },
+            # using Movie.all_ratings makes an intersting bug in at
+            # least the develomplent envorinment:
+            # https://stackoverflow.com/questions/17561697/argumenterror-a-copy-of-applicationcontroller-has-been-removed-from-the-module#23008837
+            inclusion: { in: %w[G PG PG-13 R NC-17] }, # ::Movie.all_ratings },
             unless: :grandfathered?
 
   scope :with_good_reviews, lambda { |threshold|

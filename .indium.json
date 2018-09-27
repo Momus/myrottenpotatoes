@@ -1,0 +1,11 @@
+{
+  "configurations": [
+    {
+      "name" : "My Rotten Potatoes",
+      "type" : "chrome",
+      "host" : "localhost",
+      "url"  : "http://localhost:3000",
+      "port" : 9222
+    }
+  ]
+}

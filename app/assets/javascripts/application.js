@@ -10,7 +10,11 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require rails-ujs
+// See https://www.engineyard.com/blog/using-jquery-with-rails-how-to
+// about how to add jQuery into rails now.
+//
 //= require activestorage
 //= require turbolinks
+//= require jquery3
+//= require jquery_ujs
 //= require_tree .
